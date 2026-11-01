@@ -1,0 +1,10 @@
+.env
+*.py[cod]
+__pycache__/
+.pytest_cache/
+db.sqlite3
+staticfiles/
+media/
+.venv/
+node_modules/
+clients/windows/src-tauri/target/

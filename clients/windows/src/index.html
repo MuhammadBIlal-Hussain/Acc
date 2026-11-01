@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LedgerForge ERP</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}body{margin:0;min-width:900px}.shell{max-width:1180px;margin:0 auto;padding:56px 40px}
+    .eyebrow{margin:0 0 8px;color:#1769aa;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    h1{margin:0;font-size:2.5rem;letter-spacing:-.04em}.intro{max-width:650px;margin:12px 0 30px;color:#596579;font-size:1.05rem;line-height:1.6}
+    .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:28px}.status{display:inline-flex;align-items:center;gap:8px;margin-right:auto;color:#596579;font-size:.92rem}.dot{width:9px;height:9px;border-radius:50%;background:#aab4c3}.dot.ok{background:#1b9a67}
+    button{padding:11px 16px;border:0;border-radius:8px;background:#1769aa;color:#fff;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#e8eef6;color:#1769aa}button:hover{filter:brightness(.96)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:22px;border:1px solid #e1e7f0;border-radius:14px;background:#fff;box-shadow:0 4px 18px #1720330b}.card h2{margin:0 0 8px;font-size:1.05rem}.card p{margin:0;color:#596579;line-height:1.5}.badge{display:inline-block;margin-top:18px;padding:5px 9px;border-radius:99px;background:#eef2f7;color:#69778b;font-size:.75rem;font-weight:700}
+    .footer{margin-top:30px;color:#7a8798;font-size:.85rem}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <p class="eyebrow">LedgerForge ERP</p>
+    <h1>Your business, in one place.</h1>
+    <p class="intro">A focused workspace for companies, finance, inventory, and operations. This starter app is connected to the shared Django backend and ready for the next product phase.</p>
+    <div class="toolbar">
+      <span class="status"><span id="status-dot" class="dot"></span><span id="status">Checking API...</span></span>
+      <button id="refresh" class="secondary" type="button">Refresh status</button>
+      <button id="open-web" type="button">Open web sign-in</button>
+    </div>
+    <section class="grid" aria-label="LedgerForge modules">
+      <article class="card"><h2>Companies</h2><p>Manage your organizations and active team memberships.</p><span class="badge">Foundation ready</span></article>
+      <article class="card"><h2>Accounting</h2><p>Double-entry accounting and financial reports are coming next.</p><span class="badge">Coming next</span></article>
+      <article class="card"><h2>Operations</h2><p>Inventory, purchasing, sales, and invoicing will share this workspace.</p><span class="badge">Roadmap</span></article>
+    </section>
+    <p class="footer">Phase 1 foundation · Windows desktop client</p>
+  </main>
+  <script>
+    const status = document.getElementById("status");
+    const dot = document.getElementById("status-dot");
+    const checkApi = () => {
+      status.textContent = "Checking API...";
+      dot.className = "dot";
+      fetch("http://127.0.0.1:8000/api/health/")
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then(data => { status.textContent = `API: ${data.status || "unknown"}`; dot.className = "dot ok"; })
+        .catch(() => { status.textContent = "API unavailable. Start Django on port 8000."; });
+    };
+    checkApi();
+    document.getElementById("refresh").addEventListener("click", checkApi);
+    document.getElementById("open-web").addEventListener("click", () => window.open("http://127.0.0.1:8000/accounts/login/", "_blank"));
+  </script>
+</body>
+</html>

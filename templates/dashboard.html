@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - LedgerForge ERP{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p class="muted">Phase 1 foundation is active. Financial and inventory modules will be enabled only after their integrity checks and tests are complete.</p>
+{% if active_company %}
+<div class="grid">
+    <section class="card"><h2>Active company</h2><p>{{ active_company.company.name }}</p><p class="muted">{{ active_company.company.base_currency }} · {{ active_company.get_role_display }}</p></section>
+    <section class="card"><h2>Companies</h2><p>{{ memberships|length }} active membership{{ memberships|length|pluralize }}</p></section>
+</div>
+{% else %}
+<section class="card"><h2>No company assigned</h2><p>Ask an administrator to assign you to an active company before entering business data.</p></section>
+{% endif %}
+{% endblock %}
+

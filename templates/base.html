@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}LedgerForge ERP{% endblock %}</title>
+    <style>
+        :root { font-family: system-ui, sans-serif; color: #172033; background: #f5f7fb; }
+        body { margin: 0; } header { background: #14213d; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; }
+        main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; } .card { background: white; border-radius: 10px; padding: 1.25rem; box-shadow: 0 2px 12px #17203312; }
+        a { color: #1769aa; } .muted { color: #596579; } .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+        button { border: 0; background: none; color: white; cursor: pointer; font: inherit; }
+    </style>
+</head>
+<body>
+<header><strong>LedgerForge ERP</strong>{% if user.is_authenticated %}<form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form>{% endif %}</header>
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>
+
